@@ -10,19 +10,15 @@
 #include "esp_log.h"
 
 
-#define bool _Bool
-#define false 0
-#define true 1
-
 #define SLEEP10 (vTaskDelay(10))
 
 /**
- * @brief 监听按键是否被按下，此处引脚20连接 按键输出信号端
+ * @brief 监听按键是否被按下，此处引脚20连接按键输出信号端
  * @return true  : 表示按键被按下
  *         flase : 表示按键未被按下
 */
 bool CheckKeyEvent() {
-    return gpio_get_level(20);
+    return gpio_get_level(gpio_num_t::GPIO_NUM_20);
 }
 
 
@@ -52,9 +48,9 @@ void SetLight(bool status) {
  * @brief 为按钮供电，此处为21引脚
 */
 void init_button() {
-    gpio_set_level(21,1);
+    gpio_set_level(gpio_num_t::GPIO_NUM_21,1);
 }
-
+extern "C" {
 void app_main() {
 
     init_button();
@@ -81,4 +77,5 @@ void app_main() {
     }
     
     return;
+}
 }
