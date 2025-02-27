@@ -8,7 +8,7 @@
     },
     "idf.espIdfPath": "/home/yongheng/esp/v5.3.1/esp-idf",
     "idf.openOcdConfigs": [
-        "board/esp32c3-builtin.cfg"
+        "board/esp32c3-ftdi.cfg"
     ],
     "idf.port": "/dev/ttyACM0",
     "idf.pythonBinPath": "/home/yongheng/.espressif/python_env/idf5.3_py3.12_env/bin/python",
@@ -16,5 +16,5 @@
     "files.associations": {
         "gpio.h": "c"
     },
-    "idf.flashType": "JTAG"
+    "idf.flashType": "UART"
 }

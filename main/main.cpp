@@ -9,6 +9,14 @@
 #include "driver/gpio.h"
 #include "esp_log.h"
 
+#define  CAT_PIN(num) (gpio_num_t::GPIO_NUM_ ## num)
+
+#define JDQ_POWER       CAT_PIN(10)
+#define JDQ_IN          CAT_PIN(5)
+
+#define BUTTON_POWER    CAT_PIN(21)
+#define BUTTON_IN       CAT_PIN(20)
+
 
 #define SLEEP10 (vTaskDelay(10))
 
@@ -18,7 +26,7 @@
  *         flase : 表示按键未被按下
 */
 bool CheckKeyEvent() {
-    return gpio_get_level(gpio_num_t::GPIO_NUM_20);
+    return gpio_get_level(BUTTON_IN);
 }
 
 
@@ -41,14 +49,14 @@ bool CheckIsLongTimeKey() {
  * @param status : true为开，false为关
 */
 void SetLight(bool status) {
-    
+    gpio_set_level(JDQ_IN, status);   // 继电器 in
 }
 
 /**
  * @brief 为按钮供电，此处为21引脚
 */
 void init_button() {
-    gpio_set_level(gpio_num_t::GPIO_NUM_21,1);
+    gpio_set_level(BUTTON_POWER,1);
 }
 extern "C" {
 void app_main() {
@@ -63,10 +71,10 @@ void app_main() {
                 printf("长按\n");
             }
             else {
+                status = !status;
+                SetLight(status);
                 printf("短按\n");
             }
-            SetLight(status);
-            status = !status;
         }
         else {
             // printf("未按下\n");
